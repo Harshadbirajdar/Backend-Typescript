@@ -1,15 +1,20 @@
 {
-  "name": "backend-typescript",
+  "name": "create-node-ts",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "tsc-watch --onSuccess \"node ./dist/index.js\" --compiler typescript/bin/tsc ",
     "build": "tsc",
-    "start": "node ./dist/index.js"
+    "start": "node ./dist/index.js",
+    "prepare": "npm run build"
   },
-  "author": "Harshad Birajdar",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Harshadbirajdar/Backend-Typescript.git"
+  },
+  "author": "Harshad Birajdar <hbirajdar1@gmail.com>",
   "license": "ISC",
   "devDependencies": {
     "@types/cookie-parser": "^1.4.3",

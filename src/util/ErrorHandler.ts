@@ -2,7 +2,7 @@ import { Response, Request, NextFunction, ErrorRequestHandler } from "express";
 import config from "../config";
 import logger from "../logger";
 
-const errorHandler: ErrorRequestHandler = (
+export const errorHandler: ErrorRequestHandler = (
   err: Error,
   _req: Request,
   res: Response,
@@ -16,4 +16,8 @@ const errorHandler: ErrorRequestHandler = (
   });
 };
 
-export default errorHandler;
+export const notFound = (req: Request, res: Response, next: NextFunction) => {
+  const error = new Error(`Not Found - ${req.originalUrl}`);
+  res.status(404);
+  next(error);
+};

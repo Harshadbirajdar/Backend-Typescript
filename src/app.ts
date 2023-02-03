@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import { authLimiter } from "./middleware/rateLimiter";
 import config from "./config";
 import router from "./route/v1";
-import errorHandler from "./util/ErrorHandler";
+import { notFound, errorHandler } from "./util/ErrorHandler";
 
 const app: Application = express();
 
@@ -24,5 +24,6 @@ if (config.env === "production") {
 
 app.use(config.PREFIX, router);
 
+app.use(notFound);
 app.use(errorHandler);
 export default app;

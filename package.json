@@ -1,5 +1,5 @@
 {
-  "name": "create-node-ts",
+  "name": "create-node-express-ts",
   "version": "1.0.0",
   "description": "",
   "main": "./dist/index.js",
@@ -33,6 +33,7 @@
     "express-rate-limit": "^6.7.0",
     "helmet": "^6.0.1",
     "i": "^0.3.7",
+    "mongoose": "^6.9.0",
     "morgan": "^1.10.0",
     "npm": "^9.3.0",
     "winston": "^3.8.2"

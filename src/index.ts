@@ -1,6 +1,7 @@
 import app from "./app";
 import config from "./config";
+import logger from "./logger";
 
 app.listen(config.PORT, (): void => {
-  console.log(`Server started successfully on port ${config.PORT}`);
+  logger.info(`Server started successfully on port ${config.PORT}`);
 });

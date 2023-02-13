@@ -10,8 +10,7 @@
     "start": "node ./dist/index.js",
     "prepare": "npm run build",
     "lint": "eslint .",
-    "lint:fix":"eslint . --fix"
-    
+    "lint:fix": "eslint . --fix"
   },
   "repository": {
     "type": "git",

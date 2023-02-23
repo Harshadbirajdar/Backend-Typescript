@@ -6,7 +6,7 @@ import cookieParser from "cookie-parser";
 import { authLimiter } from "./middleware/rateLimiter";
 import config from "./config";
 import router from "./route/v1";
-import { notFound, errorHandler } from "./util/ErrorHandler";
+import { errorHandler, notFound } from "./middleware/error";
 
 const app: Application = express();
 

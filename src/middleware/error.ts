@@ -1,23 +1,30 @@
 import { Response, Request, NextFunction, ErrorRequestHandler } from "express";
 import config from "../config";
+import httpStatus from "../util/httpStatus";
 import logger from "../logger";
+import ApiError, { IApiError } from "../helper/ApiError";
 
 export const errorHandler: ErrorRequestHandler = (
-  err: Error,
+  err: IApiError,
   _req: Request,
   res: Response,
   _next: NextFunction
 ) => {
   logger.error(err.message);
-  res.json({
+  const { message, statusCode } = err;
+
+  res.status(statusCode).json({
     success: "false",
-    message: err.message,
+    message: message,
     stack: config.env !== "production" ? err.stack : undefined,
   });
 };
 
 export const notFound = (req: Request, res: Response, next: NextFunction) => {
-  const error = new Error(`Not Found - ${req.originalUrl}`);
-  res.status(404);
+  const error = new ApiError(
+    httpStatus.notFound,
+    `Not Found - ${req.originalUrl}`
+  );
+
   next(error);
 };

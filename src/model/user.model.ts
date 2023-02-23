@@ -1,15 +1,26 @@
-import { Schema, model, Types } from "mongoose";
+/* eslint-disable no-unused-vars */
+import { Schema, model, Types, Model } from "mongoose";
+import bcrypt from "bcrypt";
 
-interface IUser {
+export enum Role {
+  ADMIN = "ADMIN",
+  USER = "USER",
+  SUPER_ADMIN = "SUPER_ADMIN",
+}
+export interface IUser {
   _id: Types.ObjectId;
   name: string;
   email: string;
   password: string;
   verified: boolean;
-  role: string;
+  role: Role;
+}
+interface IuserMethod extends Model<IUser> {
+  isEmailTaken(email: string): boolean;
+  isPasswordMatch(password: string): boolean;
 }
 
-const userSchema = new Schema<IUser>({
+const userSchema = new Schema<IUser, IuserMethod>({
   name: {
     type: Schema.Types.String,
     required: true,
@@ -29,9 +40,27 @@ const userSchema = new Schema<IUser>({
   },
   role: {
     type: Schema.Types.String,
-    enum: ["USER", "ADMIN", "SUPER_ADMIN"],
-    default: "USER",
+    enum: Object.keys(Role),
+    default: Role.USER,
   },
 });
 
-export const UserModel = model<IUser>("User", userSchema);
+userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
+  const user = await this.findOne({ email, _id: { $ne: excludeUserId } });
+  return !!user;
+};
+
+userSchema.methods.isPasswordMatch = async function (password: string) {
+  const result = await bcrypt.compare(password, this.password);
+  return result;
+};
+
+userSchema.pre("save", async function (next) {
+  if (this.isModified("password")) {
+    this.password = await bcrypt.hash(this.password, 8);
+  }
+  next();
+});
+
+const UserModel = model<IUser, IuserMethod>("User", userSchema);
+export default UserModel;

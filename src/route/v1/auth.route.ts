@@ -1,11 +1,14 @@
-import express, { Router, Request, Response } from "express";
+import express, { Router } from "express";
+import userController from "../../controllers/user.controller";
+import validate from "../../middleware/validate";
+import authValidation from "../../validations/auth.validation";
 
 const router: Router = express.Router();
 
-router.get("/", (req: Request, res: Response) => {
-  res.json({
-    message: "Hello from Harshad",
-  });
-});
+router.post(
+  "/register",
+  validate(authValidation.register),
+  userController.createUser
+);
 
 export default router;

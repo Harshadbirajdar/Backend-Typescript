@@ -9,6 +9,11 @@ const createUser = async (userBody: IUser) => {
   return UserModel.create(userBody);
 };
 
+const getUserByEmail = async (email: string) => {
+  return UserModel.findOne({ email });
+};
+
 export default {
   createUser,
+  getUserByEmail,
 };

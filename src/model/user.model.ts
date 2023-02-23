@@ -33,7 +33,6 @@ const userSchema = new Schema<IUser>({
   },
   password: {
     type: Schema.Types.String,
-    select: false,
   },
   verified: {
     type: Schema.Types.Boolean,

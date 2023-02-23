@@ -3,6 +3,8 @@ import morgan from "morgan";
 import helmet from "helmet";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import xss from "xss-clean";
+import mongoSanitize from "express-mongo-sanitize";
 import { authLimiter } from "./middleware/rateLimiter";
 import config from "./config";
 import router from "./route/v1";
@@ -21,6 +23,10 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+
+// Sanitize user-generated content
+app.use(xss());
+app.use(mongoSanitize());
 
 // rate limiter for authentication routes
 if (config.env === "production") {

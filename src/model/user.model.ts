@@ -1,5 +1,5 @@
 /* eslint-disable no-unused-vars */
-import { Schema, model, Types, Model } from "mongoose";
+import { Schema, model, Types, Model, Document } from "mongoose";
 import bcrypt from "bcrypt";
 
 export enum Role {
@@ -7,20 +7,20 @@ export enum Role {
   USER = "USER",
   SUPER_ADMIN = "SUPER_ADMIN",
 }
-export interface IUser {
+export interface IUser extends Document {
   _id: Types.ObjectId;
   name: string;
   email: string;
   password: string;
   verified: boolean;
   role: Role;
+  isPasswordMatch(password: string): boolean;
 }
 interface IuserMethod extends Model<IUser> {
   isEmailTaken(email: string): boolean;
-  isPasswordMatch(password: string): boolean;
 }
 
-const userSchema = new Schema<IUser, IuserMethod>({
+const userSchema = new Schema<IUser>({
   name: {
     type: Schema.Types.String,
     required: true,
@@ -33,6 +33,7 @@ const userSchema = new Schema<IUser, IuserMethod>({
   },
   password: {
     type: Schema.Types.String,
+    select: false,
   },
   verified: {
     type: Schema.Types.Boolean,

@@ -11,7 +11,12 @@ import { errorHandler, notFound } from "./middleware/error";
 const app: Application = express();
 
 app.use(cors());
-app.use(morgan("tiny"));
+
+// Limited to development environment
+if (config.env === "development") {
+  app.use(morgan("dev"));
+}
+
 app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

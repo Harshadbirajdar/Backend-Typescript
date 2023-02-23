@@ -13,7 +13,7 @@ export const errorHandler: ErrorRequestHandler = (
   logger.error(err.message);
   const { message, statusCode } = err;
 
-  res.status(statusCode).json({
+  res.status(statusCode || httpStatus.forbidden).json({
     success: "false",
     message: message,
     stack: config.env !== "production" ? err.stack : undefined,

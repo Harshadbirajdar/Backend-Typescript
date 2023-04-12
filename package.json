@@ -8,7 +8,7 @@
     "dev": "tsc-watch --onSuccess \"node ./dist/index.js\" --compiler typescript/bin/tsc ",
     "build": "tsc",
     "start": "node ./dist/index.js",
-    "prepare": "npm run build",
+    "prepare": "npm run build && husky install",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
@@ -33,7 +33,7 @@
     "eslint-config-prettier": "^8.6.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.2.1",
-    "husky": "^8.0.3",
+    "husky": "^8.0.0",
     "morgan": "^1.10.0",
     "prettier": "^2.8.4",
     "tsc-watch": "^6.0.0",

@@ -17,7 +17,7 @@ const login = asyncHandler(async (req, res) => {
 
   user.password = undefined as unknown as string;
 
-  return commonResponse(res, "User login successfully", { user, token });
+  return commonResponse(res, "User login successfully", { user, ...token });
 });
 
 export default { register, login };

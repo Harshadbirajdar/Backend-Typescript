@@ -25,6 +25,7 @@ const isLoggedIn = asyncHandler(
         return next(new ApiError(httpStatus.unauthorized, "User Not Found"));
 
       req.user = user;
+
       next();
     }
   }

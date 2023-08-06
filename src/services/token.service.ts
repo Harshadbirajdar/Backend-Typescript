@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { IUser } from "../model/user.model";
 import { Types } from "mongoose";
 
-type Token = "refreshToken" | "accessToken";
+type Token = "refreshToken" | "accessToken" | "verify";
 
 const generateToken = (
   userId: Types.ObjectId,
@@ -57,6 +57,9 @@ const verifyToken = async (token: string, secret: Token) => {
     return await jwt.verify(token, config.jwt.accessSecret);
   } else if (secret === "refreshToken") {
     return await jwt.verify(token, config.jwt.refreshSecret);
+  } else if (secret === "verify") {
+    return await jwt.verify(token, config.userVerification);
   }
 };
+
 export default { generateAuthTokens, verifyToken };

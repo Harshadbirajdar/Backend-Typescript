@@ -1,6 +1,8 @@
 /* eslint-disable no-unused-vars */
 import { Schema, model, Types, Model, Document } from "mongoose";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import config from "../config";
 
 export enum Role {
   ADMIN = "ADMIN",
@@ -15,6 +17,7 @@ export interface IUser extends Document {
   verified: boolean;
   role: Role;
   isPasswordMatch(password: string): boolean;
+  generateVerificationToken(): string;
 }
 interface IuserMethod extends Model<IUser> {
   isEmailTaken(email: string): boolean;
@@ -53,6 +56,16 @@ userSchema.statics.isEmailTaken = async function (email, excludeUserId) {
 userSchema.methods.isPasswordMatch = async function (password: string) {
   const result = await bcrypt.compare(password, this.password);
   return result;
+};
+
+userSchema.methods.generateVerificationToken = async function () {
+  const verificationToken = await jwt.sign(
+    { id: this._id },
+    config.userVerification,
+    { expiresIn: "7d" }
+  );
+
+  return verificationToken;
 };
 
 userSchema.pre("save", async function (next) {

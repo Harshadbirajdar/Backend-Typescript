@@ -24,9 +24,6 @@ const isLoggedIn = asyncHandler(
       if (!user)
         return next(new ApiError(httpStatus.unauthorized, "User Not Found"));
 
-      if (!user.verified)
-        return next(new ApiError(httpStatus.unauthorized, "User Not Verified"));
-
       req.user = user;
 
       next();

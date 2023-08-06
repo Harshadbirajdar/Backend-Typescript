@@ -4,7 +4,7 @@ import httpStatus from "../util/httpStatus";
 const commonResponse = (
   res: Response,
   message: string,
-  data: unknown,
+  data?: unknown,
   statusCode: httpStatus = httpStatus.ok,
   success = true
 ) => {

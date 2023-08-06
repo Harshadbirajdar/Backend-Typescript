@@ -3,19 +3,15 @@ import { Schema, model, Types, Model, Document } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import config from "../config";
+import roleService from "../services/role.service";
 
-export enum Role {
-  ADMIN = "ADMIN",
-  USER = "USER",
-  SUPER_ADMIN = "SUPER_ADMIN",
-}
 export interface IUser extends Document {
   _id: Types.ObjectId;
   name: string;
   email: string;
   password: string;
   verified: boolean;
-  role: Role;
+  role: Types.ObjectId;
   isPasswordMatch(password: string): boolean;
   generateVerificationToken(): string;
 }
@@ -42,9 +38,7 @@ const userSchema = new Schema<IUser>({
     default: false,
   },
   role: {
-    type: Schema.Types.String,
-    enum: Object.keys(Role),
-    default: Role.USER,
+    type: Schema.Types.ObjectId,
   },
 });
 
@@ -71,6 +65,10 @@ userSchema.methods.generateVerificationToken = async function () {
 userSchema.pre("save", async function (next) {
   if (this.isModified("password")) {
     this.password = await bcrypt.hash(this.password, 8);
+  }
+  if (this.role === undefined) {
+    const defaultRole = await roleService.getDefaultRole();
+    defaultRole && (this.role = defaultRole._id);
   }
   next();
 });

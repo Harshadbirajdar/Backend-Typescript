@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import config from ".";
 import logger from "../logger";
+import seedService from "../services/seed.service";
 
 mongoose.set("strictQuery", true);
 
@@ -16,6 +17,7 @@ mongoose
 
 mongoose.connection.on("connected", () => {
   logger.debug("Mongoose default connection open to " + config.DB_URL);
+  seedService.addUserAndRole();
 });
 
 mongoose.connection.on("error", (err) => {

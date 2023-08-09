@@ -73,5 +73,7 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+userSchema.index({ email: 1 });
+
 const UserModel = model<IUser, IuserMethod>("User", userSchema);
 export default UserModel;

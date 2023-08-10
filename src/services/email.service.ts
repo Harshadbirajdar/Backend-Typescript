@@ -30,7 +30,7 @@ const sendVerificationMail = async (
 
   const data = await ejs.renderFile(template, { name, url });
 
-  sendEmail(to, subject, data);
+  return sendEmail(to, subject, data);
 };
 
 export default {

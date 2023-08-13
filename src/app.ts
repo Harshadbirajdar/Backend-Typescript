@@ -9,6 +9,7 @@ import { authLimiter } from "./middleware/rateLimiter";
 import config from "./config";
 import router from "./route/v1";
 import { errorHandler, notFound } from "./middleware/error";
+import requestInfo from "./middleware/requestInfo";
 
 const app: Application = express();
 
@@ -32,6 +33,9 @@ app.use(mongoSanitize());
 if (config.env === "production") {
   app.use("/v1/auth", authLimiter);
 }
+
+// log all request data
+app.use(requestInfo);
 
 app.use(config.PREFIX, router);
 

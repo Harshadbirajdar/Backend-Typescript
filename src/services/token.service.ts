@@ -1,8 +1,9 @@
-import moment, { Moment } from "moment";
-import config from "../config";
 import jwt from "jsonwebtoken";
-import { IUser } from "../model/user.model";
+import moment, { Moment } from "moment";
 import { Types } from "mongoose";
+
+import config from "../config";
+import { IUser } from "../model/user.model";
 
 type Token = "refreshToken" | "accessToken" | "verify";
 

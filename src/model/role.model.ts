@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import { Schema, model, Types, Document } from "mongoose";
+
 import Role from "../enums/role.enum";
 
 export interface RoleDoc extends Document {

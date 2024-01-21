@@ -1,8 +1,9 @@
 import { Request, Response } from "express";
+
 import asyncHandler from "../helper/asyncHandler";
 import commonResponse from "../helper/commonResponse";
-import roleService from "../services/role.service";
 import logger from "../logger";
+import roleService from "../services/role.service";
 
 const createRole = asyncHandler(async (req: Request, res: Response) => {
   const { name, rights, isDefaultRole } = req.body;

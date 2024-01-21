@@ -1,12 +1,13 @@
 import { Response, NextFunction } from "express";
-import httpStatus from "../util/httpStatus";
+
 import ApiError from "../helper/ApiError";
 import asyncHandler from "../helper/asyncHandler";
+import { IUser } from "../model/user.model";
+import roleService from "../services/role.service";
 import tokenService from "../services/token.service";
 import userService from "../services/user.service";
-import { IUser } from "../model/user.model";
 import { ProtectedRequest } from "../types/app-request";
-import roleService from "../services/role.service";
+import httpStatus from "../util/httpStatus";
 
 const isLoggedIn = asyncHandler(
   async (req: ProtectedRequest, res: Response, next: NextFunction) => {

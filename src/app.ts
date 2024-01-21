@@ -1,15 +1,16 @@
-import express, { Application } from "express";
-import morgan from "morgan";
-import helmet from "helmet";
-import cors from "cors";
 import cookieParser from "cookie-parser";
-import xss from "xss-clean";
+import cors from "cors";
+import express, { Application } from "express";
 import mongoSanitize from "express-mongo-sanitize";
-import { authLimiter } from "./middleware/rateLimiter";
+import helmet from "helmet";
+import morgan from "morgan";
+import xss from "xss-clean";
+
 import config from "./config";
-import router from "./route/v1";
 import { errorHandler, notFound } from "./middleware/error";
+import { authLimiter } from "./middleware/rateLimiter";
 import requestInfo from "./middleware/requestInfo";
+import router from "./route/v1";
 
 const app: Application = express();
 

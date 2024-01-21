@@ -1,7 +1,8 @@
 /* eslint-disable no-unused-vars */
-import { Schema, model, Types, Model, Document } from "mongoose";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { Schema, model, Types, Model, Document } from "mongoose";
+
 import config from "../config";
 import roleService from "../services/role.service";
 

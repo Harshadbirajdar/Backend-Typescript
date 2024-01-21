@@ -1,8 +1,9 @@
 import { Types } from "mongoose";
+
 import ApiError from "../helper/ApiError";
 import UserModel from "../model/user.model";
-import httpStatus from "../util/httpStatus";
 import { CreateUser } from "../types/user";
+import httpStatus from "../util/httpStatus";
 
 const createUser = async (userBody: CreateUser) => {
   if (await UserModel.isEmailTaken(userBody.email)) {

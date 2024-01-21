@@ -1,8 +1,9 @@
 import { Response, Request, NextFunction, ErrorRequestHandler } from "express";
+
 import config from "../config";
-import httpStatus from "../util/httpStatus";
-import logger from "../logger";
 import ApiError, { IApiError } from "../helper/ApiError";
+import logger from "../logger";
+import httpStatus from "../util/httpStatus";
 
 export const errorHandler: ErrorRequestHandler = (
   err: IApiError,

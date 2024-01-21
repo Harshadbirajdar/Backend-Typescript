@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
-import config from ".";
+
 import logger from "../logger";
 import seedService from "../services/seed.service";
+
+import config from ".";
 
 mongoose.set("strictQuery", true);
 

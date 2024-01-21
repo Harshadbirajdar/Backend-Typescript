@@ -1,4 +1,5 @@
 import express, { Router } from "express";
+
 import authRoute from "./auth.route";
 import roleRoute from "./role.route";
 

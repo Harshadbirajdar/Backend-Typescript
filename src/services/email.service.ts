@@ -1,8 +1,10 @@
+import path from "path";
+
+import ejs from "ejs";
 import nodemailer from "nodemailer";
+
 import config from "../config";
 import logger from "../logger";
-import ejs from "ejs";
-import path from "path";
 
 const transport = nodemailer.createTransport(config.email);
 

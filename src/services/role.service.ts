@@ -1,6 +1,7 @@
 import { Types } from "mongoose";
-import RoleModel from "../model/role.model";
+
 import ApiError from "../helper/ApiError";
+import RoleModel from "../model/role.model";
 import httpStatus from "../util/httpStatus";
 
 const getRoleById = async (id: Types.ObjectId) => {

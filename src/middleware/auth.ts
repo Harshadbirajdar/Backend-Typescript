@@ -40,13 +40,17 @@ const isAllowed = (...requiredRights: string[]) =>
       return next(new ApiError(httpStatus.unauthorized, "User Not found"));
 
     const role = await roleService.getRoleById(user.role);
+
     let isAllowed = false;
-    requiredRights.forEach((rights) => {
-      if (role?.rights.includes(rights)) {
-        return (isAllowed = true);
+
+    for (let i = 0; i < requiredRights.length; i++) {
+      if (role?.rights.includes(requiredRights[i])) {
+        isAllowed = true;
+        break;
       }
       isAllowed = false;
-    });
+    }
+
     if (!isAllowed)
       return next(
         new ApiError(

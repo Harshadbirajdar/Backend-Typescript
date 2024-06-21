@@ -10,18 +10,20 @@ const requestInfo = async (
   const ip =
     req.headers?.["x-forwarded-for"] || req.ip || req.socket["remoteAddress"];
   const path = req.path;
-  const params = JSON.stringify(req.params);
-  const query = JSON.stringify(req.query);
-  const method = JSON.stringify(req.method);
+  const params = req.params;
+  const query = req.query;
+  const method = req.method;
   const body = { ...req.body };
+  const requestId = req.id;
   delete body?.password; //sensitive data which should not be logged
   delete body?.confirmPassword; //sensitive data which should not be logged
   delete body?.token; //sensitive data which should not be logged
 
   const infoObject = {
+    requestId,
     ip,
     path,
-    body: JSON.stringify(body),
+    body,
     params,
     query,
     method,

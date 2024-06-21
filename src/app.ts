@@ -1,6 +1,6 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import express, { Application } from "express";
+import express, { Application, Request } from "express";
 import mongoSanitize from "express-mongo-sanitize";
 import helmet from "helmet";
 import morgan from "morgan";
@@ -28,17 +28,18 @@ app.use(helmet());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
+app.use(requestId);
 
 // Sanitize user-generated content
 app.use(xss());
 app.use(mongoSanitize());
 
 app.use(
-  responseTime((req, res, time) => {
+  responseTime((req: Request, res, time) => {
     logger.info(
-      `Response time: ${req.method} ${req.url} ${res.statusCode} ${time.toFixed(
-        3
-      )}ms`
+      `Request id: ${req.id}, Response time: ${req.method} ${req.url} ${
+        res.statusCode
+      } ${time.toFixed(3)}ms`
     );
   })
 );
@@ -50,8 +51,6 @@ if (config.env === "production") {
 
 // log all request data
 app.use(requestInfo);
-
-app.use(requestId);
 
 app.use(config.PREFIX, router);
 

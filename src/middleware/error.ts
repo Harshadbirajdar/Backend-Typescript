@@ -7,11 +7,13 @@ import httpStatus from "../util/httpStatus";
 
 export const errorHandler: ErrorRequestHandler = (
   err: IApiError,
-  _req: Request,
+  req: Request,
   res: Response,
   _next: NextFunction
 ) => {
-  logger.error(err.message);
+  logger.error(
+    `Error occurred for request ID: ${req.id}. Message: ${err.message}`
+  );
   const { message, statusCode } = err;
 
   res.status(statusCode || httpStatus.forbidden).json({

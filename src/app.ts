@@ -12,6 +12,7 @@ import logger from "./logger";
 import { errorHandler, notFound } from "./middleware/error";
 import { authLimiter } from "./middleware/rateLimiter";
 import requestInfo from "./middleware/requestInfo";
+import requestId from "./middleware/requsetId";
 import router from "./route/v1";
 
 const app: Application = express();
@@ -49,6 +50,8 @@ if (config.env === "production") {
 
 // log all request data
 app.use(requestInfo);
+
+app.use(requestId);
 
 app.use(config.PREFIX, router);
 

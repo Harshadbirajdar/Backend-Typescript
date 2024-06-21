@@ -4,9 +4,11 @@ import express, { Application } from "express";
 import mongoSanitize from "express-mongo-sanitize";
 import helmet from "helmet";
 import morgan from "morgan";
+import responseTime from "response-time";
 import xss from "xss-clean";
 
 import config from "./config";
+import logger from "./logger";
 import { errorHandler, notFound } from "./middleware/error";
 import { authLimiter } from "./middleware/rateLimiter";
 import requestInfo from "./middleware/requestInfo";
@@ -29,6 +31,16 @@ app.use(cookieParser());
 // Sanitize user-generated content
 app.use(xss());
 app.use(mongoSanitize());
+
+app.use(
+  responseTime((req, res, time) => {
+    logger.info(
+      `Response time: ${req.method} ${req.url} ${res.statusCode} ${time.toFixed(
+        3
+      )}ms`
+    );
+  })
+);
 
 // rate limiter for authentication routes
 if (config.env === "production") {

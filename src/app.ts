@@ -10,7 +10,6 @@ import xss from "xss-clean";
 import config from "./config";
 import logger from "./logger";
 import { errorHandler, notFound } from "./middleware/error";
-import { authLimiter } from "./middleware/rateLimiter";
 import requestInfo from "./middleware/requestInfo";
 import requestId from "./middleware/requsetId";
 import router from "./route/v1";
@@ -43,11 +42,6 @@ app.use(
     );
   })
 );
-
-// rate limiter for authentication routes
-if (config.env === "production") {
-  app.use("/v1/auth", authLimiter);
-}
 
 // log all request data
 app.use(requestInfo);

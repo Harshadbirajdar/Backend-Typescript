@@ -26,4 +26,8 @@ export default {
     },
     from: process.env.EMAIL_FROM || "",
   },
+  REDIS: {
+    HOST: process.env.REDIS_HOST || "127.0.0.1",
+    PORT: Number(process.env.REDIS_PORT) || 6379,
+  },
 };
